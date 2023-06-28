@@ -1,0 +1,10 @@
+.app-container{
+    background-color: rgb(176, 251, 251);
+    height: 95vh;
+    width: 95vw;
+    border-radius: 20px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+}
