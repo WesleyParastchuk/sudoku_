@@ -5,21 +5,54 @@
     justify-content: center;
     gap: 10px;
     flex-wrap: wrap;
+
     height: 47%;
     width: 100%;
-    background-color: rgb(0, 225, 255);
+
     padding: 10px;
+
     border-radius: 15px;
+    border: 1px solid transparent;
+
+    background-image: linear-gradient(45deg, rgb(0, 0, 66), rgb(0, 0, 66)),
+		linear-gradient(135deg, magenta, rgb(161, 2, 161));
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
+	
+    box-shadow:
+    0 0 2px rgb(180, 2, 180),
+    0 0 4px rgb(180, 2, 180),
+    0 0 8px rgb(180, 2, 180),
+    0 0 16px rgb(180, 2, 180),
+    0 0 20px rgb(180, 2, 180);
 }
 
 .number-to-click{
     width: 30%;
     height: 30%;
-    border-radius: 15px;
-    background-color: rgb(3, 184, 208);
+
     font-size: 40px;
     font-family: Arial, Helvetica, sans-serif;
-    color: rgb(0, 0, 47);
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.076);
+    color: rgb(210, 250, 255);
+
+    text-shadow: 0 0 2px rgb(22, 149, 192),
+    0 0 4px rgb(22, 149, 192),
+    0 0 8px rgb(22, 149, 192),
+    0 0 16px rgb(22, 149, 192),
+    0 0 32px rgb(22, 149, 192);
+
+    border-radius: 15px;
+    border: 1px solid transparent;
+
+    background-image: linear-gradient(45deg, rgb(0, 0, 66), rgb(0, 0, 66)),
+		linear-gradient(135deg, lightblue, rgb(93, 203, 240));
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
+	
+    box-shadow:
+    0 0 2px rgb(22, 149, 192),
+    0 0 4px rgb(22, 149, 192),
+    0 0 8px rgb(22, 149, 192);
+
 }
 

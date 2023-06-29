@@ -1,11 +1,26 @@
-.toolbar-new-game{
-    width: 100%;
-    height: 12%;
-    border-radius: 20px;
-    box-shadow: 3px 3px rgba(0, 0, 0, 0.127);
-    background-color: rgb(253, 253, 6);
-    font-size: 60px;
-    font-family: Arial, Helvetica, sans-serif;
-    color: brown;
-    border: 2px solid brown;
+.toolbar-new-game {
+	width: 100%;
+	height: 12%;
+
+	font-size: 3.75rem;
+	font-family: Arial, Helvetica, sans-serif;
+	color: rgb(204, 242, 252);
+
+    text-shadow: 0 0 2px rgb(0, 69, 92),
+    0 0 4px rgb(0, 69, 92),
+    0 0 8px rgb(0, 69, 92),
+    0 0 16px rgb(0, 69, 92),
+    0 0 32px rgb(0, 69, 92),
+    0 0 64px rgb(0, 69, 92);
+
+	border-radius: 15px;
+	border: 3px solid transparent;
+
+	background-image: linear-gradient(45deg, rgb(0, 0, 66), rgb(0, 0, 66)),
+		linear-gradient(135deg, rgb(0, 191, 255), rgb(1, 128, 170));
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
+
+	box-shadow: 0 0 2px rgb(0, 69, 92), 0 0 4px rgb(0, 69, 92),
+		0 0 8px rgb(0, 69, 92), 0 0 16px rgb(0, 69, 92), 0 0 24px rgb(0, 69, 92);
 }
