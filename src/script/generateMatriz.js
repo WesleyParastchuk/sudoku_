@@ -1,7 +1,7 @@
 import { getColumn, listThisUpTo, randomOf } from "./manipulableFuntions";
 import { blockSize, totalBlocks } from "./variables";
 
-function createEmptyMatriz() {
+export function createEmptyMatriz() {
 	const matriz = [];
 	let emptyList = listThisUpTo(1, totalBlocks, false);
 	for (let lines = 0; lines < totalBlocks; lines++) {

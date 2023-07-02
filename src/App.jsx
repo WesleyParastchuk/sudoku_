@@ -15,7 +15,6 @@ function App() {
 					<Game />
 					<ToolBar />
 				</div>
-				<Footer />
 			</main>
 		</>
 	);

@@ -1,16 +1,15 @@
-.game-container{
-    height: 95%;
-    width: auto;
-    display: flex;
-    flex-direction: column;
+.game-container {
+    box-sizing: border-box;
+	height: 610px;
+	width: 610px;
+
+	display: flex;
     align-items: center;
     justify-content: center;
-    background-color: rgb(141, 254, 254);
-    border-radius: 15px;
-}
+	flex-wrap: wrap;
+	gap: 3px;
 
-.sudoku{
-    height: calc(100% - 40px);
-    margin: 20px;
-    margin-top: 0; 
+	background-color: rgb(141, 254, 254);
+
+	border-radius: 15px;
 }
