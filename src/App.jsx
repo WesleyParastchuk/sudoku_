@@ -17,7 +17,6 @@ function App() {
 				</div>
 				<Footer />
 			</main>
-			
 		</>
 	);
 }

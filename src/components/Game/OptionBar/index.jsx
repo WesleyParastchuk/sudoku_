@@ -11,6 +11,7 @@ const OptionBar = () => {
 			<div className="game-option-bar-button-container">
 				<ButtonOptionBar option="Checar" />
 				<ButtonOptionBar option="Limpar" />
+				<ButtonOptionBar option="Dica" />
 			</div>
 		</div>
 	);
