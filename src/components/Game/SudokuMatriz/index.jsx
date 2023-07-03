@@ -16,8 +16,6 @@ const SudokuMatriz = () => {
 						<CellSpace
 							row={row}
 							column={column}
-							blockRow={Math.floor(row / 3)}
-							blockColumn={Math.floor(column / 3)}
 							onClick={() => game.cellClick(event)}
 							key={`${row} ${column}`}
 							innerHTML={cell}
