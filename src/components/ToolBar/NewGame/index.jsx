@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-import { allDifficults, blockSize } from "../../../script/variables";
+import { allDifficults } from "../../../script/variables";
 
 import "./NewGame.css";
 
