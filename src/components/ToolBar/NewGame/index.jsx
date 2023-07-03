@@ -5,31 +5,24 @@ import { allDifficults, blockSize } from "../../../script/variables";
 import "./NewGame.css";
 
 const NewGame = () => {
-    const [display, setDisplay] = useState("none")
+	const [display, setDisplay] = useState("none");
+
 	function Difficults() {
 		return (
-			<div className="pop-up-container" style={{display: display}}>
+			<div className="pop-up-container" style={{ display: display }}>
 				{"asdadasdasd"}
 			</div>
 		);
-	}
-
-    function showDifficults(){
-        setDisplay("block")
-    }
-
-	function hideDifficults() {
-		setDisplay("none")
 	}
 
 	return (
 		<button
 			type="button"
 			className="toolbar-new-game"
-			onMouseEnter={showDifficults}
-			onMouseLeave={hideDifficults}
+			onMouseEnter={() => setDisplay("block")}
+			onMouseLeave={() => setDisplay("none")}
 		>
-			Novo jogo <Difficults/>
+			Novo jogo <Difficults />
 		</button>
 	);
 };

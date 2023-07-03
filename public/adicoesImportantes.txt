@@ -1,0 +1,6 @@
+Transformar em type
+terminar
+Criar API para o projeto
+Salvar tempos em um banco de dados
+Usar setas para mover
+Definir botões para onFocus(mouse) e não onClick
