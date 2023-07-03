@@ -6,16 +6,16 @@ import NewGame from "./NewGame";
 
 import "./ToolBar.css";
 
-const ToolBar = () => {
+const ToolBar = (props) => {
 	return (
 		<div className="toolbar-container">
 			<div className="toolbar-options-of-game">
 				<OptionButton option="Pausar" />
 				<OptionButton option="Reiniciar" />
 			</div>
-			<Numbers max = {9} />
+			<Numbers max={9} />
 			<Note />
-			<NewGame />
+			<NewGame setThisGame={(newGame) => props.setThisGame(newGame)} />
 		</div>
 	);
 };

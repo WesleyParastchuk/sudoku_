@@ -1,4 +1,5 @@
 import { totalBlocks, allDifficults } from "./variables";
+import React, { useState } from "react";
 
 export function getRow(matriz, rowNum) {
 	return matriz[rowNum];

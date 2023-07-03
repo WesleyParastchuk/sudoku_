@@ -1,22 +1,20 @@
-import React from "react";
+import React, { useState } from "react";
 import CellSpace from "../CellSpace";
 
-import "./SudokuMatriz.css"
+import "./SudokuMatriz.css";
 
-import Sudoku from "../../../script/gameController";
+import { game } from "../../../App";
 
-export const game = new Sudoku();
-
-const SudokuMatriz = () => {
+const SudokuMatriz = (props) => {
 	return (
 		<>
-			{game.actualGame.map((line, row) => {
+			{props.thisGame.map((line, row) => {
 				return line.map((cell, column) => {
 					return (
 						<CellSpace
 							row={row}
 							column={column}
-							onClick={() => game.cellClick(event)}
+							onClick={(event) => game.cellClick(event)}
 							key={`${row} ${column}`}
 							innerHTML={cell}
 						/>

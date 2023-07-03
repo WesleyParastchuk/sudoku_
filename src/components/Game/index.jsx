@@ -1,14 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
 import OptionBar from "./OptionBar";
 import SudokuMatriz from "./SudokuMatriz";
 
 import "./Game.css";
 
-const Game = () => {
+const Game = (props) => {
 	return (
 		<div className="game-container">
 			<OptionBar />
-			<SudokuMatriz />
+			<SudokuMatriz thisGame = {props.thisGame}/>
 		</div>
 	);
 };
