@@ -1,0 +1,15 @@
+.difficult {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+
+	height: 15%;
+	width: 40%;
+
+	background-color: aqua;
+
+	border-radius: 30px;
+
+	color: black;
+	text-shadow: none;
+}
