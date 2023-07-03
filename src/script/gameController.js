@@ -88,9 +88,9 @@ class Sudoku {
 					clicked.getAttribute("column"),
 				])
 			);
-		} else {
-			localStorage.setItem("clicked", JSON.stringify([0, 0]));
+			return;
 		}
+		localStorage.setItem("clicked", JSON.stringify([0, 0]));
 	}
 
 	get cellClicked() {
