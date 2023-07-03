@@ -1,4 +1,4 @@
-import { totalBlocks } from "./variables";
+import { totalBlocks, allDifficults } from "./variables";
 
 export function getRow(matriz, rowNum) {
 	return matriz[rowNum];
@@ -22,4 +22,12 @@ export function listThisUpTo(min, max, num = true) {
 
 export function randomOf(max, min = 0) {
 	return Math.floor(Math.random() * (max + 1) - min);
+}
+
+export function getAllDifficults(){
+	const difficults = [];
+	for(let difficult in allDifficults){
+		difficults.push(difficult);
+	}
+	return difficults;
 }

@@ -1,16 +1,19 @@
 import React, { useState } from "react";
 
-import { allDifficults } from "../../../script/variables";
+import { getAllDifficults } from "../../../script/manipulableFuntions";
 
 import "./NewGame.css";
 
 const NewGame = () => {
 	const [display, setDisplay] = useState("none");
+	const difficults = getAllDifficults();
 
 	function Difficults() {
 		return (
 			<div className="pop-up-container" style={{ display: display }}>
-				{"asdadasdasd"}
+				{difficults.map((difficult) => {
+					return(<div className={`${difficult} difficult`}>{difficult}</div>)
+				})}
 			</div>
 		);
 	}
