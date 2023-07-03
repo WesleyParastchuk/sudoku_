@@ -1,31 +1,20 @@
 import React, { useState } from "react";
 
-import { getAllDifficults } from "../../../script/manipulableFuntions";
-
 import "./NewGame.css";
 
-const NewGame = () => {
-	const [display, setDisplay] = useState("none");
-	const difficults = getAllDifficults();
+import Difficults from "./Difficults";
 
-	function Difficults() {
-		return (
-			<div className="pop-up-container" style={{ display: display }}>
-				{difficults.map((difficult) => {
-					return(<div className={`${difficult} difficult`}>{difficult}</div>)
-				})}
-			</div>
-		);
-	}
+const NewGame = () => {
+	const [display, setDifficultDisplay] = useState("block");
 
 	return (
 		<button
 			type="button"
 			className="toolbar-new-game"
-			onMouseEnter={() => setDisplay("block")}
-			onMouseLeave={() => setDisplay("none")}
+			onClick={() => setDifficultDisplay("block")}
+			onMouseLeave={() => setDifficultDisplay("none")}
 		>
-			Novo jogo <Difficults />
+			Novo jogo <Difficults display={display} />
 		</button>
 	);
 };

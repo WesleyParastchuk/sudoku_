@@ -24,10 +24,18 @@ export function randomOf(max, min = 0) {
 	return Math.floor(Math.random() * (max + 1) - min);
 }
 
-export function getAllDifficults(){
+export function getAllDifficults() {
 	const difficults = [];
-	for(let difficult in allDifficults){
+	for (let difficult in allDifficults) {
 		difficults.push(difficult);
 	}
 	return difficults;
+}
+
+export function title(string) {
+	return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
+}
+
+export function removeDash(string) {
+	return string.replaceAll("-", " ");
 }

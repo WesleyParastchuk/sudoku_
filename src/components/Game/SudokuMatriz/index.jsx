@@ -5,7 +5,7 @@ import "./SudokuMatriz.css"
 
 import Sudoku from "../../../script/gameController";
 
-let game = new Sudoku();
+export const game = new Sudoku();
 
 const SudokuMatriz = () => {
 	return (
