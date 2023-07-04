@@ -7,3 +7,15 @@ Definir botões para onFocus(mouse) e não onClick
 
 
 ONDE ESTAVA: addKeysEvents..
+
+usePrevious
+useScript
+useEventListener
+useKeyPress
+useObjectState
+useList
+useLocalStorage
+useEffect
+useContext
+
+criar proprios hooks
