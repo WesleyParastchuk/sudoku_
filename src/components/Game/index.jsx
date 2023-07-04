@@ -1,20 +1,12 @@
-import React, { useState } from "react";
-import OptionBar from "./OptionBar";
-import SudokuMatriz from "./SudokuMatriz";
+import React from "react";
+import { ShowGame } from "./ShowGame";
 
-import "./Game.css";
+import "./Game.css"
 
-const Game = props => {
+export function Game() {
 	return (
 		<div className="game-container">
-			<OptionBar />
-			<SudokuMatriz
-				thisGame={props.thisGame}
-				clickLoc={props.clickLoc}
-				setClickLoc={newLoc => props.setClickLoc(newLoc)}
-			/>
+			<ShowGame />
 		</div>
 	);
-};
-
-export default Game;
+}

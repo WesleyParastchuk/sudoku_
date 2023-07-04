@@ -1,0 +1,52 @@
+.app-container {
+	height: 98vh;
+	width: 98vw;
+
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	flex-direction: column;
+
+	border: 5px solid transparent;
+    border-radius: 20px;
+
+	background-image: linear-gradient(45deg, rgb(0, 0, 66), rgb(0, 0, 66)),
+		linear-gradient(135deg, magenta, rgb(161, 2, 161));
+	background-origin: border-box;
+	background-clip: padding-box, border-box;
+	
+    box-shadow:
+    0 0 2px rgb(180, 2, 180),
+    0 0 4px rgb(180, 2, 180),
+    0 0 8px rgb(180, 2, 180),
+    0 0 16px rgb(180, 2, 180),
+    0 0 32px rgb(180, 2, 180),
+    0 0 64px rgba(180, 2, 180, 0.5);
+}
+
+.main-container{
+	display: flex;
+	align-items: center;
+	justify-content: space-evenly;
+
+	height: 100%;
+	width: 100%;
+}
+
+*{
+    margin: 0;
+    border: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+#root{
+    height: 100vh;
+    width: 100vw;
+    background: rgb(0, 0, 66);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+}

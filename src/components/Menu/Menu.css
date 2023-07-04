@@ -1,0 +1,14 @@
+.menu-container {
+	width: 20%;
+	height: 90%;
+
+	border: 1px solid white;
+    border-radius: 10px;
+
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+	flex-direction: column;
+
+	padding: 1%;
+}

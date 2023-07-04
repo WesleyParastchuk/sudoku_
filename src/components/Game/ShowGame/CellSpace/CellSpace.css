@@ -1,5 +1,5 @@
-.game-container {
-	height: 80%;
+.cell-space{
+    height: 10%;
 
     border: 1px solid white;
     border-radius: 10px;
@@ -8,7 +8,11 @@
     align-items: center;
     justify-content: center;
 
-    padding: 0.4%;
+    background-color: transparent;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2rem;
+    color: white;
 
     aspect-ratio: 1/1;
 }
