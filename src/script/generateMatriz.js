@@ -10,6 +10,7 @@ export function createEmptyMatriz() {
 	return matriz;
 }
 
+
 function createSemiOrdenedMatriz() {
 	const matriz = createEmptyMatriz();
 	for (let blockRow = 0; blockRow < blockSize; blockRow++) {

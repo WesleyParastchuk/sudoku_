@@ -4,11 +4,15 @@ import SudokuMatriz from "./SudokuMatriz";
 
 import "./Game.css";
 
-const Game = (props) => {
+const Game = props => {
 	return (
 		<div className="game-container">
 			<OptionBar />
-			<SudokuMatriz thisGame = {props.thisGame}/>
+			<SudokuMatriz
+				thisGame={props.thisGame}
+				clickLoc={props.clickLoc}
+				setClickLoc={newLoc => props.setClickLoc(newLoc)}
+			/>
 		</div>
 	);
 };

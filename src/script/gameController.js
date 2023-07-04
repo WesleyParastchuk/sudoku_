@@ -44,7 +44,10 @@ class Sudoku {
 	}
 
 	cellClick(event) {
-		this.cellClicked = event.target;
+		this.cellClicked = [
+			event.target.getAttribute("row"),
+			event.target.getAttribute("column"),
+		];
 	}
 
 	set FullGame(fullGame) {
@@ -83,10 +86,7 @@ class Sudoku {
 		if (clicked) {
 			localStorage.setItem(
 				"clicked",
-				JSON.stringify([
-					clicked.getAttribute("row"),
-					clicked.getAttribute("column"),
-				])
+				JSON.stringify([clicked[0], clicked[1]])
 			);
 			return;
 		}

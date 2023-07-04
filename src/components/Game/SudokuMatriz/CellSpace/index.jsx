@@ -14,6 +14,7 @@ const CellSpace = props => {
 			column={props.column}
 			onClick={props.onClick}
 			blocktype={(blockrow + blockcolumn) % 2 ? "even" : "odd"}
+			style={props.style}
 		>
 			{props.innerHTML}
 		</button>
