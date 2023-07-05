@@ -1,17 +1,21 @@
 import React, { useContext } from "react";
-import { GameContext } from "../../../contexts/GameContext/GameContext";
+import { PopUpDifficultSelection } from "./PopUpDifficultSelection";
+import { PopUpViewContext } from "../../../contexts/PopUpViewContext/PopUpViewContext";
 
-import "./NewGame.css"
+import "./NewGame.css";
 
 export function NewGame() {
-	const { setNewGame } = useContext(GameContext);
+	const { changePopUp } = useContext(PopUpViewContext);
 	return (
-		<button
-			type="button"
-			className="new-game-button"
-			onClick={() => setNewGame()}
-		>
-			Novo Jogo
-		</button>
+		<>
+			<button
+				type="button"
+				className="new-game-button"
+				onClick={() => changePopUp()}
+			>
+				Novo Jogo
+			</button>
+			<PopUpDifficultSelection />
+		</>
 	);
 }

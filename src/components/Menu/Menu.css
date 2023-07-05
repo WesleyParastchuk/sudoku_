@@ -3,7 +3,7 @@
 	height: 90%;
 
 	border: 1px solid white;
-    border-radius: 10px;
+	border-radius: 10px;
 
 	display: flex;
 	align-items: center;
@@ -12,3 +12,5 @@
 
 	padding: 1%;
 }
+
+
