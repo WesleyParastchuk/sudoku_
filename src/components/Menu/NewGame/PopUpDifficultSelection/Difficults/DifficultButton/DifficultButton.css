@@ -1,0 +1,40 @@
+.pop-up-difficult-button{
+    height: 16%;
+    width: 86%;
+
+    border: 1px solid white;
+    border-radius: 10px;
+
+    background-color: transparent;
+
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 2em;
+    color: white;
+
+    cursor: pointer;
+}
+
+.very-easy{
+    color: green;
+    border-color: green;
+}
+
+.easy{
+    color: lightgreen;
+    border-color: lightgreen;
+}
+
+.medium{
+    color: yellow;
+    border-color: yellow;
+}
+
+.hard{
+    color: orangered;
+    border-color: orangered;
+}
+
+.very-hard{
+    color: red;
+    border-color: red;
+}

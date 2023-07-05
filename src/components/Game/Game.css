@@ -1,15 +1,14 @@
 .game-container {
-    box-sizing: border-box;
-	height: 610px;
-	width: 610px;
+	height: 80%;
 
-	display: flex;
+    border: 1px solid white;
+    border-radius: 10px;
+
+    display: flex;
     align-items: center;
     justify-content: center;
-	flex-wrap: wrap;
-	gap: 3px;
 
-	background-color: rgb(141, 254, 254);
+    padding: 0.4%;
 
-	border-radius: 15px;
+    aspect-ratio: 1/1;
 }

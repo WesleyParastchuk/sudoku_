@@ -1,0 +1,20 @@
+.close-pop-up {
+	height: 15%;
+
+	position: fixed;
+	top: 10%;
+	right: 10%;
+
+	border: 1px solid red;
+	border-radius: 50%;
+
+	background-color: transparent;
+
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 2em;
+	color: red;
+
+	cursor: pointer;
+
+	aspect-ratio: 1/1;
+}

@@ -1,0 +1,18 @@
+.show-game-container {
+    height: 100%;
+
+    border: 1px solid white;
+    border-radius: 10px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1%;
+    flex-wrap: wrap;
+    gap: 1%;
+    
+
+    background-color: transparent;
+
+    aspect-ratio: 1/1;
+}
