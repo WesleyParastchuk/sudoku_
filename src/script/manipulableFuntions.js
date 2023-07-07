@@ -1,5 +1,4 @@
 import { totalBlocks, allDifficults } from "./variables";
-import React, { useState } from "react";
 
 export function getRow(matriz, rowNum) {
 	return matriz[rowNum];
@@ -11,6 +10,18 @@ export function getColumn(matriz, columnNum) {
 		thisColumn.push(matriz[i][Number(columnNum)]);
 	}
 	return thisColumn;
+}
+
+export function getBlock(matriz, blockRow, blockColumn) {
+	let thisBlock = [];
+	for (let row = 0; row < 3; row++) {
+		for (let column = 0; column < 3; column++) {
+			thisBlock.push(
+				matriz[blockRow * 3 + row][blockColumn * 3 + column]
+			);
+		}
+	}
+	return thisBlock;
 }
 
 export function listThisUpTo(min, max, num = true) {
@@ -39,4 +50,12 @@ export function title(string) {
 
 export function removeDash(string) {
 	return string.replaceAll("-", " ");
+}
+
+export function calcBlockRow(row) {
+	return Math.floor(row / 3);
+}
+
+export function calcBlockColumn(column) {
+	return Math.floor(column / 3);
 }

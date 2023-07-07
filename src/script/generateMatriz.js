@@ -1,4 +1,12 @@
-import { getColumn, listThisUpTo, randomOf } from "./manipulableFuntions";
+import {
+	getRow,
+	getColumn,
+	getBlock,
+	listThisUpTo,
+	randomOf,
+	calcBlockColumn,
+	calcBlockRow,
+} from "./manipulableFuntions";
 import { blockSize, totalBlocks } from "./variables";
 
 export function createEmptyMatriz() {
@@ -9,7 +17,6 @@ export function createEmptyMatriz() {
 	}
 	return matriz;
 }
-
 
 function createSemiOrdenedMatriz() {
 	const matriz = createEmptyMatriz();
@@ -74,3 +81,82 @@ function randonizeMatriz(matriz) {
 export function createRandomMatriz() {
 	return randonizeMatriz(createSemiOrdenedMatriz());
 }
+
+function transformBlockToMatriz(blocks) {
+	let matriz = [[], [], [], [], [], [], [], [], []];
+	for (let block in blocks) {
+		for (let i = 0; i < 3; i++) {
+			for (let j = 0; j < 3; j++) {
+				matriz[block].push(blocks[Math.floor(block) + i][block % 3][j]);
+			}
+		}
+	}
+}
+
+function createInitialBlocks(block) {
+	const options = [...listThisUpTo(1, 9)];
+	for (let element in block) {
+		let randomIndex = Math.floor(Math.random() * options.length);
+		block[element] = options[randomIndex];
+		options.splice(randomIndex, 1);
+	}
+	return block;
+}
+
+function setThisBlock(block){
+	for(let row = 0; row < 3; row++){
+		for(let column = 0; column < 3; column++){
+			block[row][column] = verify 
+		}
+	}
+	return block;
+}
+
+function newCreateRandomMatriz() {
+	let matriz = createEmptyMatriz();
+	let blocks = [];
+	for (let iForBlocks = 0; iForBlocks < 9; iForBlocks++) {
+		blocks.push(
+			getBlock(
+				matriz,
+				Math.floor(iForBlocks / 3),
+				blocks - Math.floor(iForBlocks / 3) * 3
+			)
+		);
+	}
+
+	blocks[0] = createInitialBlocks(blocks[0]);
+	blocks[4] = createInitialBlocks(blocks[4]);
+	blocks[8] = createInitialBlocks(blocks[8]);
+
+	for (let i = 0; i < 9; i++) {
+		if(i%4 == 0){
+			continue;
+		}
+		blocks[i] = setThisBlock(blocks[i]);
+	}
+
+	for (let num of blocks) {
+		console.table(num);
+	}
+}
+
+newCreateRandomMatriz();
+
+// Gerar por blocos, se um deles tiver undefined, ve quais numeros faltou e da prioridade a colocar eles;
+
+
+/* 
+	Modo de fazer:
+
+	Matriz 3x3 com blocos 3x3 em cada um deles
+
+	A diagonal principal é preenchida aleatoriamente
+
+	Restante dos valores é preenchido com base em outros valores derivados dos valores já criados
+
+	O QUE FAZER
+
+	Refatorar código fazendo matrizes quadrimensionais de 3 de espaço cada dimensão
+	
+*/
