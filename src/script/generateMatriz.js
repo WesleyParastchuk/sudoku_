@@ -8,6 +8,7 @@ import {
 	calcBlockRow,
 } from "./manipulableFuntions";
 import { blockSize, totalBlocks } from "./variables";
+import generateRandomGameBlock from "./NewGenerateMatriz";
 
 export function createEmptyMatriz() {
 	const matriz = [];
@@ -141,7 +142,7 @@ function newCreateRandomMatriz() {
 	}
 }
 
-newCreateRandomMatriz();
+console.log(generateRandomGameBlock())
 
 // Gerar por blocos, se um deles tiver undefined, ve quais numeros faltou e da prioridade a colocar eles;
 
@@ -158,5 +159,5 @@ newCreateRandomMatriz();
 	O QUE FAZER
 
 	Refatorar código fazendo matrizes quadrimensionais de 3 de espaço cada dimensão
-	
+
 */
