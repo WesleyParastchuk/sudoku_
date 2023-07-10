@@ -34,3 +34,4 @@ export async function getSolution(board) {
 }
 //recoil
 //query
+//setInitGame e roda de games
