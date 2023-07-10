@@ -38,7 +38,7 @@ export function randomOf(max, min = 0) {
 
 export function getAllDifficults() {
 	const difficults = [];
-	for (let difficult in allDifficults) {
+	for (let difficult of allDifficults) {
 		difficults.push(difficult);
 	}
 	return difficults;
@@ -48,14 +48,23 @@ export function title(string) {
 	return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
 }
 
-export function removeDash(string) {
-	return string.replaceAll("-", " ");
-}
-
 export function calcBlockRow(row) {
 	return Math.floor(row / 3);
 }
 
 export function calcBlockColumn(column) {
 	return Math.floor(column / 3);
+}
+
+export function getEmptyMatriz() {
+	const matriz = [];
+
+	for (let row = 0; row < totalBlocks; row++) {
+		matriz.push([]);
+		for (let column = 0; column < totalBlocks; column++) {
+			matriz[row].push("");
+		}
+	}
+
+	return matriz;
 }

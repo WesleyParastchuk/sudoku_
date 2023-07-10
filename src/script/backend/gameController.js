@@ -1,12 +1,11 @@
 import { getBoard, getSolution } from "./getBoard";
 import { allDifficults, totalBlocks } from "../variables";
-import { randomOf } from "../manipulableFuntions";
+import { getEmptyMatriz, randomOf } from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
 		this.verifyDifficult();
 		this.verifySaveGame();
-		this.verifyInitialClick();
 	}
 
 	verifyDifficult() {
@@ -14,18 +13,22 @@ class Sudoku {
 	}
 
 	verifySaveGame() {
-		if (!this.actualGame) this.initNewGame();
+		if (!this.actualGame) this.setFirstTime();
 	}
 
-	verifyInitialClick() {
-		if (!this.cellClicked) this.cellClicked = false;
+	setFirstTime() {
+		this.initialGame = getEmptyMatriz();
+		this.actualGame = this.initialGame;
+		this.FullGame = this.initialGame;
+		this.firstTime = true;
 	}
 
 	async initNewGame() {
-		let thisBoard = await getBoard(this.difficult);
-		this.initialGame = thisBoard.board;
-		this.actualGame = this.initialGame;
-		this.FullGame = await getSolution(this.initialGame);
+		const Board = await getBoard(this.difficult);
+		this.initialGame = await Board.board;
+		this.actualGame = await Board.board;
+		this.FullGame = await getSolution(await Board);
+		return await Board.board;
 	}
 
 	cellClick(event) {
@@ -69,15 +72,24 @@ class Sudoku {
 
 	set cellClicked(pos) {
 		if (pos) {
-			const [row, column] = pos;
-			localStorage.setItem("clicked", JSON.stringify([row, column]));
-			return;
+			this._cellClicked = [pos];
 		}
-		localStorage.setItem("clicked", JSON.stringify([0, 0]));
 	}
 
 	get cellClicked() {
-		return JSON.parse(localStorage.getItem("clicked"));
+		return this._cellClicked;
+	}
+
+	Difficult;
+
+	async setNewCell(value) {
+		const initial = await this.initialGame;
+		const [row, column] = this.cellClicked;
+		if (initial[row][column]) {
+			const actual = await this.actualGame;
+			actual[row][column] = value;
+			this.actualGame = actual;
+		}
 	}
 }
 

@@ -10,7 +10,7 @@ export function NumberSelection() {
 	return (
 		<div className="number-selection-container">
 			{listThisUpTo(1, totalBlocks).map((number) => {
-				return <NumberSelectionButton key={number} number={number} />;
+				return <NumberSelectionButton key={number} number={number}/>;
 			})}
 		</div>
 	);

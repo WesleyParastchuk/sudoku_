@@ -33,3 +33,4 @@ export async function getSolution(board) {
 		});
 }
 //recoil
+//query
