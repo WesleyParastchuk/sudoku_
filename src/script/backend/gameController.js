@@ -1,6 +1,6 @@
-import { createRandomMatriz, createEmptyMatriz } from "./generateMatriz";
-import { allDifficults, totalBlocks } from "./variables";
-import { randomOf } from "./manipulableFuntions";
+import { getBoard, getSolution } from "./getBoard";
+import { allDifficults, totalBlocks } from "../variables";
+import { randomOf } from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
@@ -10,7 +10,7 @@ class Sudoku {
 	}
 
 	verifyDifficult() {
-		if (!this.difficult) this.difficult = "medium";
+		if (!this.difficult) this.difficult = "easy";
 	}
 
 	verifySaveGame() {
@@ -21,26 +21,11 @@ class Sudoku {
 		if (!this.cellClicked) this.cellClicked = false;
 	}
 
-	initNewGame() {
-		this.FullGame = createRandomMatriz();
-		this.initialGame = this.configInitialGame();
+	async initNewGame() {
+		let thisBoard = await getBoard(this.difficult);
+		this.initialGame = thisBoard.board;
 		this.actualGame = this.initialGame;
-	}
-
-	configInitialGame() {
-		const initialMatriz = createEmptyMatriz();
-		const fullMatriz = this.FullGame;
-		for (let row = 0; row < totalBlocks; row++) {
-			for (let column = 0; column < totalBlocks; column++) {
-				if (
-					randomOf(totalBlocks * totalBlocks) <
-					allDifficults[this.difficult]
-				) {
-					initialMatriz[row][column] = fullMatriz[row][column];
-				}
-			}
-		}
-		return initialMatriz;
+		this.FullGame = await getSolution(this.initialGame);
 	}
 
 	cellClick(event) {
@@ -82,12 +67,10 @@ class Sudoku {
 		return JSON.parse(localStorage.getItem("difficult"));
 	}
 
-	set cellClicked(clicked) {
-		if (clicked) {
-			localStorage.setItem(
-				"clicked",
-				JSON.stringify([clicked[0], clicked[1]])
-			);
+	set cellClicked(pos) {
+		if (pos) {
+			const [row, column] = pos;
+			localStorage.setItem("clicked", JSON.stringify([row, column]));
 			return;
 		}
 		localStorage.setItem("clicked", JSON.stringify([0, 0]));

@@ -5,7 +5,7 @@ import { GameContextProvider } from "./contexts/GameContext/GameContext";
 
 import "./App.css";
 
-import Sudoku from "./script/gameController";
+import Sudoku from "./script/backend/gameController";
 
 export const game = new Sudoku();
 

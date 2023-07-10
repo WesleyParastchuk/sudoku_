@@ -1,10 +1,10 @@
-import React, { createContext, useState } from "react";
+import React, { createContext, useEffect, useState } from "react";
 
 import { game } from "../../App";
 
 export const GameContext = createContext();
 
-export function GameContextProvider({ children }) {
+export async function GameContextProvider({ children }) {
 	const [thisGame, setThisGame] = useState(game.actualGame);
 
 	function setNewGame() {
@@ -13,9 +13,7 @@ export function GameContextProvider({ children }) {
 	}
 
 	return (
-		<GameContext.Provider
-			value={{ thisGame, setNewGame}}
-		>
+		<GameContext.Provider value={{ thisGame, setNewGame }}>
 			{children}
 		</GameContext.Provider>
 	);
