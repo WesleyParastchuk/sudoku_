@@ -3,7 +3,7 @@ import React, { createContext, useState} from "react";
 export const PopUpViewContext = createContext();
 
 export function PopUpViewContextProvider({children}) {
-    const [popUp, setPopUp] = useState("block");
+    const [popUp, setPopUp] = useState("none");
 
     function changePopUp() {
 		setPopUp(popUp == "block" ? "none" : "block");
