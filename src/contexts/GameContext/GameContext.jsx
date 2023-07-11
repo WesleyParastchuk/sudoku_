@@ -7,19 +7,28 @@ export const GameContext = createContext();
 
 export function GameContextProvider({ children }) {
 	const [thisGame, setThisGame] = useState(game.actualGame);
+	const [clickedButton, setClickedButton] = useState([0, 0]);
 
 	async function setNewGame() {
 		setThisGame(getEmptyMatriz());
-		const thisGame = await game.initNewGame();
-		setThisGame(await thisGame);
+		const newGame = await game.initNewGame();
+		setThisGame(await newGame);
 	}
 
 	async function actGame() {
-		setThisGame(await thisGame);
+		setThisGame(await game.actualGame);
 	}
 
 	return (
-		<GameContext.Provider value={{ thisGame, setNewGame, actGame }}>
+		<GameContext.Provider
+			value={{
+				thisGame,
+				setNewGame,
+				clickedButton,
+				setClickedButton,
+				actGame,
+			}}
+		>
 			{children}
 		</GameContext.Provider>
 	);

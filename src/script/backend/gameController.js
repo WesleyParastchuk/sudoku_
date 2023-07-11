@@ -1,11 +1,21 @@
 import { getBoard, getSolution } from "./getBoard";
-import { allDifficults, totalBlocks } from "../variables";
-import { getEmptyMatriz, randomOf } from "../manipulableFuntions";
+import {
+	allDifficults,
+	fullGameFirstTime,
+	initialGameFirstTime,
+	totalBlocks,
+} from "../variables";
+import {
+	getAllDifficults,
+	getEmptyMatriz,
+	randomOf,
+} from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
 		this.verifyDifficult();
 		this.verifySaveGame();
+		this.preLoadGames();
 	}
 
 	verifyDifficult() {
@@ -17,25 +27,46 @@ class Sudoku {
 	}
 
 	setFirstTime() {
-		this.initialGame = getEmptyMatriz();
-		this.actualGame = this.initialGame;
-		this.FullGame = this.initialGame;
-		this.firstTime = true;
+		this.initialGame = [...initialGameFirstTime];
+		this.actualGame = [...initialGameFirstTime];
+		this.FullGame = [...fullGameFirstTime];
 	}
 
 	async initNewGame() {
-		const Board = await getBoard(this.difficult);
-		this.initialGame = await Board.board;
-		this.actualGame = await Board.board;
-		this.FullGame = await getSolution(await Board);
-		return await Board.board;
+		const board = await this.getLoadedGame(this.difficult);
+		this.initialGame = await board[0];
+		this.actualGame = await board[0];
+		this.FullGame = await board[1];
+		this.addPreLoadGame(this.difficult);
+		return await board[0];
 	}
 
-	cellClick(event) {
-		this.cellClicked = [
-			event.target.getAttribute("row"),
-			event.target.getAttribute("column"),
-		];
+	async preLoadGames() {
+		allDifficults.map(async difficult => {
+			await this.addPreLoadGame(difficult);
+		});
+	}
+
+	async addPreLoadGame(difficult) {
+		const thisLoad = [];
+		thisLoad.push(difficult);
+		thisLoad.push(await getBoard(difficult));
+		thisLoad.push(await getSolution(await thisLoad[1]));
+		this.setLoadedGame(thisLoad);
+	}
+
+	setLoadedGame(thisLoad) {
+		localStorage.setItem(
+			`pre-loaded-games-${thisLoad[0]}`,
+			JSON.stringify([thisLoad[1].board, thisLoad[2]])
+		);
+	}
+
+	getLoadedGame(difficult) {
+		console.log(difficult);
+		return JSON.parse(
+			localStorage.getItem(`pre-loaded-games-${difficult}`)
+		);
 	}
 
 	set FullGame(fullGame) {
@@ -70,27 +101,21 @@ class Sudoku {
 		return JSON.parse(localStorage.getItem("difficult"));
 	}
 
-	set cellClicked(pos) {
-		if (pos) {
-			this._cellClicked = [pos];
-		}
-	}
-
-	get cellClicked() {
-		return this._cellClicked;
-	}
-
-	Difficult;
-
-	async setNewCell(value) {
+	async setNewCell(value, cellClicked) {
 		const initial = await this.initialGame;
-		const [row, column] = this.cellClicked;
+		const [row, column] = cellClicked;
+		console.log("s");
 		if (initial[row][column]) {
-			const actual = await this.actualGame;
-			actual[row][column] = value;
-			this.actualGame = actual;
+			return;
 		}
+		
+		const actual = await this.actualGame;
+		actual[row][column] = value;
+		this.actualGame = await actual;
 	}
 }
 
 export default Sudoku;
+
+//Função de gerar os numeros semi staticos feita
+//Gerar função de definir jogo
