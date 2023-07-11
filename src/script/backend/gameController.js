@@ -104,11 +104,9 @@ class Sudoku {
 	async setNewCell(value, cellClicked) {
 		const initial = await this.initialGame;
 		const [row, column] = cellClicked;
-		console.log("s");
 		if (initial[row][column]) {
 			return;
 		}
-		
 		const actual = await this.actualGame;
 		actual[row][column] = value;
 		this.actualGame = await actual;
@@ -116,6 +114,3 @@ class Sudoku {
 }
 
 export default Sudoku;
-
-//Função de gerar os numeros semi staticos feita
-//Gerar função de definir jogo

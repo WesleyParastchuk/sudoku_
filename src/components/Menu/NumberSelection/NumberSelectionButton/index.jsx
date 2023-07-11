@@ -15,8 +15,8 @@ export function NumberSelectionButton({ number }) {
 	return (
 		<button
 			className="number-selection-button"
-			onClick={event => {
-				setNewSpace(event.target.innerHTML);
+			onClick={() => {
+				setNewSpace(number);
 			}}
 		>
 			{number}

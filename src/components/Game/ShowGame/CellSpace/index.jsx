@@ -6,7 +6,8 @@ import "./CellSpace.css";
 import { game } from "../../../../App";
 
 export function CellSpace({ cell, row, column }) {
-	const { clickedButton, setClickedButton } = useContext(GameContext);
+	const { clickedButton, setClickedButton, initialGame } =
+		useContext(GameContext);
 
 	return (
 		<button
@@ -28,6 +29,7 @@ export function CellSpace({ cell, row, column }) {
 					clickedButton[0] == row && clickedButton[1] == column
 						? "orange"
 						: "transparent",
+				fontWeight: initialGame[row][column] ? "800" : "400",
 			}}
 		>
 			{cell ? cell : ""}
