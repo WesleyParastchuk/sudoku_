@@ -4,17 +4,37 @@
     border: 1px solid white;
     border-radius: 10px;
 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
     background-color: transparent;
 
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 2rem;
     color: white;
 
     aspect-ratio: 1/1;
 
     cursor: pointer;
+}
+
+.note{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+    font-size: 0.8em;
+}
+
+.number{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    font-size: 2rem;
+}
+
+.mini-cell{
+    height: 30%;
+    background-color: transparent;
+
+    display: block;
+
+    aspect-ratio: 1/1;
 }

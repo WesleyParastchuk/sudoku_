@@ -3,12 +3,12 @@ import { DifficultButton } from "./DifficultButton";
 
 import "./Difficults.css";
 
-import { getAllDifficults } from "../../../../../script/manipulableFuntions";
+import { allDifficults } from "../../../../../script/variables";
 
 export function Difficults() {
 	return (
 		<div className="pop-up-difficults-buttons-container">
-			{getAllDifficults().map((difficult) => {
+			{allDifficults.map((difficult) => {
 				return (
 					<DifficultButton key={difficult} difficult={difficult} />
 				);

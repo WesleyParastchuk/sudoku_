@@ -5,10 +5,10 @@ import { PopUpViewContext } from "../../../../../../contexts/PopUpViewContext/Po
 
 import "./DifficultButton.css";
 
-import { title } from "../../../../../../script/manipulableFuntions";
+import { allDifficultsTitles } from "../../../../../../script/variables";
 
 export function DifficultButton({ difficult }) {
-	const { setNewGame } = useContext(GameContext);
+	const { setNewGame, changePauseMove } = useContext(GameContext);
 	const { setNewDifficult } = useContext(DifficultSelectionContext);
 	const { changePopUp } = useContext(PopUpViewContext);
 
@@ -19,9 +19,10 @@ export function DifficultButton({ difficult }) {
 				setNewDifficult(difficult);
 				setNewGame();
 				changePopUp();
+				changePauseMove();
 			}}
 		>
-			{title(difficult)}
+			{allDifficultsTitles[difficult]}
 		</button>
 	);
 }

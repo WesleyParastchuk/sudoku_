@@ -1,11 +1,22 @@
 import { getBoard, getSolution } from "./getBoard";
-import { allDifficults, totalBlocks } from "../variables";
-import { getEmptyMatriz, randomOf } from "../manipulableFuntions";
+import {
+	allDifficults,
+	fullGameFirstTime,
+	initialGameFirstTime,
+} from "../variables";
+import {
+	calcBlockColumn,
+	calcBlockRow,
+	getBlock,
+	getColumn,
+	getRow,
+} from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
 		this.verifyDifficult();
 		this.verifySaveGame();
+		this.preLoadGames();
 	}
 
 	verifyDifficult() {
@@ -17,25 +28,46 @@ class Sudoku {
 	}
 
 	setFirstTime() {
-		this.initialGame = getEmptyMatriz();
-		this.actualGame = this.initialGame;
-		this.FullGame = this.initialGame;
-		this.firstTime = true;
+		this.initialGame = [...initialGameFirstTime];
+		this.actualGame = [...initialGameFirstTime];
+		this.FullGame = [...fullGameFirstTime];
 	}
 
 	async initNewGame() {
-		const Board = await getBoard(this.difficult);
-		this.initialGame = await Board.board;
-		this.actualGame = await Board.board;
-		this.FullGame = await getSolution(await Board);
-		return await Board.board;
+		const board = await this.getLoadedGame(this.difficult);
+		this.initialGame = await board[0];
+		this.actualGame = await board[0];
+		this.FullGame = await board[1];
+		this.addPreLoadGame(this.difficult);
+		return await board[0];
 	}
 
-	cellClick(event) {
-		this.cellClicked = [
-			event.target.getAttribute("row"),
-			event.target.getAttribute("column"),
-		];
+	async preLoadGames() {
+		allDifficults.map(async difficult => {
+			await this.addPreLoadGame(difficult);
+		});
+	}
+
+	async addPreLoadGame(difficult) {
+		const thisLoad = [];
+		thisLoad.push(difficult);
+		thisLoad.push(await getBoard(difficult));
+		thisLoad.push(await getSolution(await thisLoad[1]));
+		this.setLoadedGame(thisLoad);
+	}
+
+	setLoadedGame(thisLoad) {
+		localStorage.setItem(
+			`pre-loaded-games-${thisLoad[0]}`,
+			JSON.stringify([thisLoad[1].board, thisLoad[2]])
+		);
+	}
+
+	getLoadedGame(difficult) {
+		console.log(difficult);
+		return JSON.parse(
+			localStorage.getItem(`pre-loaded-games-${difficult}`)
+		);
 	}
 
 	set FullGame(fullGame) {
@@ -70,25 +102,71 @@ class Sudoku {
 		return JSON.parse(localStorage.getItem("difficult"));
 	}
 
-	set cellClicked(pos) {
-		if (pos) {
-			this._cellClicked = [pos];
+	async isValid(matriz, row, column, value) {
+		if (value == 0 || value == "") return true;
+		if (
+			(await getRow(matriz, row)).includes(value) ||
+			(await getColumn(matriz, column).includes(value)) ||
+			(await getBlock(
+				matriz,
+				calcBlockRow(row),
+				calcBlockColumn(column)
+			).includes(value))
+		) {
+			return false;
+		} else {
+			return true;
 		}
 	}
 
-	get cellClicked() {
-		return this._cellClicked;
+	async cleanNote(actual, row, column, value) {
+		if (value == 0 || value == "") return actual;
+		(await getRow(actual, row)).map((element, index) => {
+			if (typeof element == "object" && index != column) {
+				if (element.includes(value)) {
+					actual[row][index][value - 1] = 0;
+				}
+			}
+		});
+		(await getColumn(actual, column)).map((element, index) => {
+			if (typeof element == "object" && index != row) {
+				if (element.includes(value)) {
+					actual[index][column][value - 1] = 0;
+				}
+			}
+		});
+		(
+			await getBlock(actual, calcBlockRow(row), calcBlockColumn(column))
+		).map((element, index) => {
+			const thisRow = calcBlockRow(row) * 3 + Math.floor(index / 3);
+			const thisColumn = calcBlockColumn(column) * 3 + (index % 3);
+			if (typeof element == "object" && (index != (thisRow*3 + thisColumn))) {
+				if (element.includes(value)) {
+					actual[thisRow][thisColumn][value - 1] = 0;
+				}
+			}
+		});
+		return actual;
 	}
 
-	Difficult;
-
-	async setNewCell(value) {
+	async setNewCell(value, cellClicked) {
+		if (typeof value == "object")
+			value = value.map(thisOne => (thisOne ? Number(thisOne) : ""));
+		else value = Number(value);
 		const initial = await this.initialGame;
-		const [row, column] = this.cellClicked;
+		const [row, column] = cellClicked;
 		if (initial[row][column]) {
-			const actual = await this.actualGame;
+			return;
+		}
+		const actual = await this.actualGame;
+		if (await this.isValid(await actual, row, column, value)) {
 			actual[row][column] = value;
-			this.actualGame = actual;
+			this.actualGame = await this.cleanNote(
+				await actual,
+				row,
+				column,
+				value
+			);
 		}
 	}
 }

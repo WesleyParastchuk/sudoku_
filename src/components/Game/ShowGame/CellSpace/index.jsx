@@ -1,34 +1,75 @@
-import React, { useState } from "react";
+import React, { useState, useContext, useEffect } from "react";
+import { GameContext } from "../../../../contexts/GameContext/GameContext";
 
 import "./CellSpace.css";
 
 import { game } from "../../../../App";
+import {
+	calcBlockColumn,
+	calcBlockRow,
+} from "../../../../script/manipulableFuntions";
 
 export function CellSpace({ cell, row, column }) {
-	const [isFocus, setIsFocus] = useState(false);
+	const { clickedButton, setClickedButton, initialGame } =
+		useContext(GameContext);
 
-	function addFocus(event) {
-		game.cellClick(event);
-		setIsFocus(true);
-	}
+	const [actualStyle, setActualStyle] = useState("cell-space number");
 
-	function deleteFocus() {
-		setIsFocus(false);
-	}
+	useEffect(() => {
+		if (typeof cell == "object") {
+			setActualStyle("cell-space note");
+		} else {
+			setActualStyle("cell-space number");
+		}
+	}, [cell]);
 
 	return (
 		<button
 			type="button"
-			className="cell-space"
-			rowblock={Math.floor(row / 3)}
-			columnblock={Math.floor(column / 3)}
+			className={actualStyle}
+			rowblock={calcBlockRow(row)}
+			columnblock={calcBlockColumn(column)}
 			row={row}
 			column={column}
-			onBlur={() => deleteFocus()}
-			onFocus={(event) => addFocus(event)}
-			style={{ backgroundColor: isFocus ? "orange" : "transparent" }}
+			onClick={event => {
+				event.preventDefault();
+				setClickedButton([
+					event.target.getAttribute("row"),
+					event.target.getAttribute("column"),
+				]);
+			}}
+			style={{
+				backgroundColor:
+					clickedButton[0] == row && clickedButton[1] == column
+						? "orange"
+						: "transparent",
+				fontWeight: initialGame[row][column] ? "800" : "400",
+			}}
 		>
-			{cell ? cell : ""}
+			{typeof cell == "object"
+				? cell.map((oneCell, index) => {
+						return (
+							<div
+								className="mini-cell"
+								key={`${row, column, index}`}
+								onClick={ async event => {
+									await setClickedButton([
+										await event.target.parentNode.getAttribute(
+											"row"
+										),
+										await event.target.parentNode.getAttribute(
+											"column"
+										),
+									]);
+								}}
+							>
+								{oneCell ? oneCell : ""}
+							</div>
+						);
+				  })
+				: cell
+				? cell
+				: ""}
 		</button>
 	);
 }

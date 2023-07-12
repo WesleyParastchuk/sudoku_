@@ -5,7 +5,7 @@ import { game } from "../../App";
 export const PopUpViewContext = createContext();
 
 export function PopUpViewContextProvider({ children }) {
-	const [popUp, setPopUp] = useState(game.firstTime ? "block" : "none");
+	const [popUp, setPopUp] = useState("none");
 
 	function changePopUp() {
 		setPopUp(popUp == "block" ? "none" : "block");
