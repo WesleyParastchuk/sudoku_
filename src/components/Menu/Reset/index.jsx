@@ -5,7 +5,7 @@ import { GlassEffect } from "../../Styles/GlassEffect";
 import "./Reset.css";
 
 export function Reset() {
-	const { resetThisGame } = useContext(GameContext);
+	const { resetThisGame, changePauseMove } = useContext(GameContext);
 	const [isReseting, setIsReseting] = useState("none");
 
 	function changeResetState() {
@@ -17,7 +17,10 @@ export function Reset() {
 			<button
 				className="reset-button"
 				type="button"
-				onClick={changeResetState}
+				onClick={() => {
+					changeResetState();
+					changePauseMove();
+				}}
 			>
 				Reiniciar
 			</button>
@@ -34,6 +37,7 @@ export function Reset() {
 								onClick={() => {
 									resetThisGame();
 									changeResetState();
+									changePauseMove();
 								}}
 							>
 								Sim
@@ -41,7 +45,10 @@ export function Reset() {
 							<button
 								className="reset-option no"
 								type="button"
-								onClick={changeResetState}
+								onClick={() => {
+									changeResetState();
+									changePauseMove();
+								}}
 							>
 								Não
 							</button>

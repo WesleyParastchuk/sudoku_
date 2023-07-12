@@ -9,7 +9,7 @@ import { listThisUpTo } from "../../../script/manipulableFuntions";
 import { totalBlocks } from "../../../script/variables";
 
 export function NumberSelection() {
-	const { actGame, clickedButton, setClickedButton } =
+	const { actGame, clickedButton, setClickedButton, pauseMove} =
 		useContext(GameContext);
 	const numbers = listThisUpTo(1, totalBlocks);
 
@@ -27,7 +27,7 @@ export function NumberSelection() {
 	}
 
 	async function handleClickEvent(event) {
-		if (event.key == "Enter") return;
+		if (pauseMove) return;
 		if (numbers.includes(Number(event.key))) {
 			await game
 				.setNewCell(event.key, clickedButton)
@@ -49,7 +49,7 @@ export function NumberSelection() {
 		return () => {
 			document.removeEventListener("keydown", handleClickEvent);
 		};
-	}, [clickedButton]);
+	}, [clickedButton, pauseMove]);
 
 	return (
 		<div className="number-selection-container">

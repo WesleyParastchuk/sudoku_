@@ -9,6 +9,7 @@ export function GameContextProvider({ children }) {
 	const [thisGame, setThisGame] = useState(game.actualGame);
 	const [initialGame, setInitialGame] = useState(game.initialGame);
 	const [clickedButton, setClickedButton] = useState([0, 0]);
+	const [pauseMove, setPauseMove] = useState(false);
 
 	async function setNewGame() {
 		setThisGame(getEmptyMatriz());
@@ -26,6 +27,10 @@ export function GameContextProvider({ children }) {
 		setThisGame(await game.actualGame);
 	}
 
+	function changePauseMove() {
+		setPauseMove(pauseMove ? false : true);
+	}
+
 	return (
 		<GameContext.Provider
 			value={{
@@ -36,6 +41,8 @@ export function GameContextProvider({ children }) {
 				initialGame,
 				actGame,
 				resetThisGame,
+				pauseMove,
+				changePauseMove,
 			}}
 		>
 			{children}

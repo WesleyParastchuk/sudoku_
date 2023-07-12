@@ -8,7 +8,7 @@ import "./DifficultButton.css";
 import { allDifficultsTitles } from "../../../../../../script/variables";
 
 export function DifficultButton({ difficult }) {
-	const { setNewGame } = useContext(GameContext);
+	const { setNewGame, changePauseMove } = useContext(GameContext);
 	const { setNewDifficult } = useContext(DifficultSelectionContext);
 	const { changePopUp } = useContext(PopUpViewContext);
 
@@ -19,6 +19,7 @@ export function DifficultButton({ difficult }) {
 				setNewDifficult(difficult);
 				setNewGame();
 				changePopUp();
+				changePauseMove();
 			}}
 		>
 			{allDifficultsTitles[difficult]}
