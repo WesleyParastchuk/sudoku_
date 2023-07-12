@@ -1,4 +1,4 @@
-import { totalBlocks, allDifficults } from "./variables";
+import { blockSize, totalBlocks } from "./variables";
 
 export function getRow(matriz, rowNum) {
 	return matriz[rowNum];
@@ -14,10 +14,10 @@ export function getColumn(matriz, columnNum) {
 
 export function getBlock(matriz, blockRow, blockColumn) {
 	let thisBlock = [];
-	for (let row = 0; row < 3; row++) {
-		for (let column = 0; column < 3; column++) {
+	for (let row = 0; row < blockSize; row++) {
+		for (let column = 0; column < blockSize; column++) {
 			thisBlock.push(
-				matriz[blockRow * 3 + row][blockColumn * 3 + column]
+				matriz[blockRow * blockSize + row][blockColumn * blockSize + column]
 			);
 		}
 	}
@@ -32,28 +32,16 @@ export function listThisUpTo(min, max, num = true) {
 	return list;
 }
 
-export function randomOf(max, min = 0) {
-	return Math.floor(Math.random() * (max + 1) - min);
-}
-
-export function getAllDifficults() {
-	const difficults = [];
-	for (let difficult of allDifficults) {
-		difficults.push(difficult);
-	}
-	return difficults;
-}
-
 export function title(string) {
 	return string.charAt(0).toUpperCase() + string.substring(1).toLowerCase();
 }
 
 export function calcBlockRow(row) {
-	return Math.floor(row / 3);
+	return Math.floor(row / blockSize);
 }
 
 export function calcBlockColumn(column) {
-	return Math.floor(column / 3);
+	return Math.floor(column / blockSize);
 }
 
 export function getEmptyMatriz() {

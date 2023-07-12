@@ -4,6 +4,7 @@ import { GameContext } from "../../../../contexts/GameContext/GameContext";
 import "./CellSpace.css";
 
 import { game } from "../../../../App";
+import { calcBlockColumn, calcBlockRow } from "../../../../script/manipulableFuntions";
 
 export function CellSpace({ cell, row, column }) {
 	const { clickedButton, setClickedButton, initialGame } =
@@ -13,8 +14,8 @@ export function CellSpace({ cell, row, column }) {
 		<button
 			type="button"
 			className="cell-space"
-			rowblock={Math.floor(row / 3)}
-			columnblock={Math.floor(column / 3)}
+			rowblock={calcBlockRow(row)}
+			columnblock={calcBlockColumn(column)}
 			row={row}
 			column={column}
 			onClick={event => {

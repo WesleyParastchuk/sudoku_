@@ -17,6 +17,11 @@ export function GameContextProvider({ children }) {
 		setInitialGame(await newGame);
 	}
 
+	async function resetThisGame() {
+		game.actualGame = await initialGame;
+		setThisGame(await initialGame);
+	}
+
 	async function actGame() {
 		setThisGame(await game.actualGame);
 	}
@@ -30,6 +35,7 @@ export function GameContextProvider({ children }) {
 				setClickedButton,
 				initialGame,
 				actGame,
+				resetThisGame,
 			}}
 		>
 			{children}

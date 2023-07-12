@@ -5,7 +5,7 @@ import { PopUpViewContext } from "../../../../../../contexts/PopUpViewContext/Po
 
 import "./DifficultButton.css";
 
-import { title } from "../../../../../../script/manipulableFuntions";
+import { allDifficultsTitles } from "../../../../../../script/variables";
 
 export function DifficultButton({ difficult }) {
 	const { setNewGame } = useContext(GameContext);
@@ -21,7 +21,7 @@ export function DifficultButton({ difficult }) {
 				changePopUp();
 			}}
 		>
-			{title(difficult)}
+			{allDifficultsTitles[difficult]}
 		</button>
 	);
 }

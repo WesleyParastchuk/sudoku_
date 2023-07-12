@@ -1,5 +1,11 @@
 export const allDifficults = ["easy", "medium", "hard"];
 
+export const allDifficultsTitles = {
+	easy: "Fácil",
+	medium: "Médio",
+	hard: "Difícil",
+};
+
 export const blockSize = 3;
 
 export const totalBlocks = blockSize * blockSize;

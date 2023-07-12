@@ -3,13 +3,7 @@ import {
 	allDifficults,
 	fullGameFirstTime,
 	initialGameFirstTime,
-	totalBlocks,
 } from "../variables";
-import {
-	getAllDifficults,
-	getEmptyMatriz,
-	randomOf,
-} from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
