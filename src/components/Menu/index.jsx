@@ -5,6 +5,7 @@ import { DifficultSelectionContextProvider } from "../../contexts/DifficultSelec
 import { PopUpViewContextProvider } from "../../contexts/PopUpViewContext/PopUpViewContext";
 import { Reset } from "./Reset";
 import { Pause } from "./Pause";
+import { Notes } from "./Notes";
 
 import "./Menu.css";
 
@@ -17,6 +18,7 @@ export function Menu() {
 			</div>
 			<DifficultSelectionContextProvider>
 				<NumberSelection />
+				<Notes />
 				<PopUpViewContextProvider>
 					<NewGame />
 				</PopUpViewContextProvider>

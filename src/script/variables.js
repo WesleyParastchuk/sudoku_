@@ -33,3 +33,5 @@ export const initialGameFirstTime = [
 	[0, 6, 0, 9, 0, 0, 0, 4, 0],
 	[9, 7, 0, 0, 0, 3, 2, 6, 1],
 ];
+
+export const emptyNote = [0, 0, 0, 0, 0, 0, 0, 0, 0];

@@ -6,10 +6,10 @@ import "./NumberSelection.css";
 import { game } from "../../../App";
 import { GameContext } from "../../../contexts/GameContext/GameContext";
 import { listThisUpTo } from "../../../script/manipulableFuntions";
-import { totalBlocks } from "../../../script/variables";
+import { totalBlocks, emptyNote } from "../../../script/variables";
 
 export function NumberSelection() {
-	const { actGame, clickedButton, setClickedButton, pauseMove} =
+	const { actGame, clickedButton, setClickedButton, pauseMove, isNote } =
 		useContext(GameContext);
 	const numbers = listThisUpTo(1, totalBlocks);
 
@@ -26,12 +26,48 @@ export function NumberSelection() {
 		}
 	}
 
+	function noteIsEmpty(note) {
+		let isEmpty = true;
+		note.forEach(space => {
+			if (space) isEmpty = false;
+		});
+		return isEmpty;
+	}
+
+	async function verifyAndSetNumberOrNote(number){
+		number = Number(number)
+		let newValue = [];
+			if (isNote) {
+				const actualValue = await game.actualGame[clickedButton[0]][
+					clickedButton[1]
+				];
+				if (typeof actualValue == "object") {
+					newValue.push(...actualValue);
+					if (actualValue.includes(number)) {
+						newValue[number - 1] = "";
+						console.log(newValue)
+						if (noteIsEmpty(newValue)) {
+							newValue = "";
+						}
+					} else {
+						newValue[number - 1] = number;
+					}
+				} else {
+					newValue.push(...emptyNote);
+					newValue[number - 1] = number;
+				}
+			} else {
+				newValue = number;
+			}
+			await game
+				.setNewCell(newValue, clickedButton)
+				.then(() => actGame());
+	}
+
 	async function handleClickEvent(event) {
 		if (pauseMove) return;
 		if (numbers.includes(Number(event.key))) {
-			await game
-				.setNewCell(event.key, clickedButton)
-				.then(() => actGame());
+			await verifyAndSetNumberOrNote(event.key);
 		} else if (event.key == "ArrowUp") {
 			setMoveClick(-1, 0);
 		} else if (event.key == "ArrowDown") {
@@ -49,15 +85,13 @@ export function NumberSelection() {
 		return () => {
 			document.removeEventListener("keydown", handleClickEvent);
 		};
-	}, [clickedButton, pauseMove]);
+	}, [clickedButton, pauseMove, isNote]);
 
 	return (
 		<div className="number-selection-container">
 			{numbers.map(number => {
-				return <NumberSelectionButton key={number} number={number} />;
+				return <NumberSelectionButton key={number} number={number} onClick={verifyAndSetNumberOrNote}/>;
 			})}
 		</div>
 	);
 }
-
-//manter foco na peça que está no meio

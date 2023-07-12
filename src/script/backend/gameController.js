@@ -4,6 +4,13 @@ import {
 	fullGameFirstTime,
 	initialGameFirstTime,
 } from "../variables";
+import {
+	calcBlockColumn,
+	calcBlockRow,
+	getBlock,
+	getColumn,
+	getRow,
+} from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
@@ -95,15 +102,72 @@ class Sudoku {
 		return JSON.parse(localStorage.getItem("difficult"));
 	}
 
+	async isValid(matriz, row, column, value) {
+		if (value == 0 || value == "") return true;
+		if (
+			(await getRow(matriz, row)).includes(value) ||
+			(await getColumn(matriz, column).includes(value)) ||
+			(await getBlock(
+				matriz,
+				calcBlockRow(row),
+				calcBlockColumn(column)
+			).includes(value))
+		) {
+			return false;
+		} else {
+			return true;
+		}
+	}
+
+	async cleanNote(actual, row, column, value) {
+		if (value == 0 || value == "") return actual;
+		(await getRow(actual, row)).map((element, index) => {
+			if (typeof element == "object" && index != column) {
+				if (element.includes(value)) {
+					actual[row][index][value - 1] = 0;
+				}
+			}
+		});
+		(await getColumn(actual, column)).map((element, index) => {
+			if (typeof element == "object" && index != row) {
+				if (element.includes(value)) {
+					actual[index][column][value - 1] = 0;
+				}
+			}
+		});
+		(
+			await getBlock(actual, calcBlockRow(row), calcBlockColumn(column))
+		).map((element, index) => {
+			const thisRow = calcBlockRow(row) * 3 + Math.floor(index / 3);
+			const thisColumn = calcBlockColumn(column) * 3 + (index % 3);
+			if (typeof element == "object" && (index != (thisRow*3 + thisColumn))) {
+				if (element.includes(value)) {
+					actual[thisRow][thisColumn][value - 1] = 0;
+				}
+			}
+		});
+		return actual;
+	}
+
 	async setNewCell(value, cellClicked) {
+		if (typeof value == "object")
+			value = value.map(thisOne => (thisOne ? Number(thisOne) : ""));
+		else value = Number(value);
 		const initial = await this.initialGame;
 		const [row, column] = cellClicked;
 		if (initial[row][column]) {
 			return;
 		}
 		const actual = await this.actualGame;
-		actual[row][column] = value;
-		this.actualGame = await actual;
+		if (await this.isValid(await actual, row, column, value)) {
+			actual[row][column] = value;
+			this.actualGame = await this.cleanNote(
+				await actual,
+				row,
+				column,
+				value
+			);
+		}
 	}
 }
 

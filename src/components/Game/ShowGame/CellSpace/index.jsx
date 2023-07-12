@@ -1,19 +1,32 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import { GameContext } from "../../../../contexts/GameContext/GameContext";
 
 import "./CellSpace.css";
 
 import { game } from "../../../../App";
-import { calcBlockColumn, calcBlockRow } from "../../../../script/manipulableFuntions";
+import {
+	calcBlockColumn,
+	calcBlockRow,
+} from "../../../../script/manipulableFuntions";
 
 export function CellSpace({ cell, row, column }) {
 	const { clickedButton, setClickedButton, initialGame } =
 		useContext(GameContext);
 
+	const [actualStyle, setActualStyle] = useState("cell-space number");
+
+	useEffect(() => {
+		if (typeof cell == "object") {
+			setActualStyle("cell-space note");
+		} else {
+			setActualStyle("cell-space number");
+		}
+	}, [cell]);
+
 	return (
 		<button
 			type="button"
-			className="cell-space"
+			className={actualStyle}
 			rowblock={calcBlockRow(row)}
 			columnblock={calcBlockColumn(column)}
 			row={row}
@@ -33,7 +46,30 @@ export function CellSpace({ cell, row, column }) {
 				fontWeight: initialGame[row][column] ? "800" : "400",
 			}}
 		>
-			{cell ? cell : ""}
+			{typeof cell == "object"
+				? cell.map((oneCell, index) => {
+						return (
+							<div
+								className="mini-cell"
+								key={`${row, column, index}`}
+								onClick={ async event => {
+									await setClickedButton([
+										await event.target.parentNode.getAttribute(
+											"row"
+										),
+										await event.target.parentNode.getAttribute(
+											"column"
+										),
+									]);
+								}}
+							>
+								{oneCell ? oneCell : ""}
+							</div>
+						);
+				  })
+				: cell
+				? cell
+				: ""}
 		</button>
 	);
 }
