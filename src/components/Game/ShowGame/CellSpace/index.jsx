@@ -33,14 +33,14 @@ export function CellSpace({ cell, row, column }) {
 			column={column}
 			onClick={event => {
 				event.preventDefault();
-				setClickedButton([
-					event.target.getAttribute("row"),
-					event.target.getAttribute("column"),
-				]);
+				setClickedButton({
+					row: event.target.getAttribute("row"),
+					column: event.target.getAttribute("column"),
+				});
 			}}
 			style={{
 				backgroundColor:
-					clickedButton[0] == row && clickedButton[1] == column
+					clickedButton.row == row && clickedButton.column == column
 						? "orange"
 						: "transparent",
 				fontWeight: initialGame[row][column] ? "800" : "400",
@@ -51,16 +51,16 @@ export function CellSpace({ cell, row, column }) {
 						return (
 							<div
 								className="mini-cell"
-								key={`${row, column, index}`}
-								onClick={ async event => {
-									await setClickedButton([
-										await event.target.parentNode.getAttribute(
+								key={`${(row, column, index)}`}
+								onClick={async event => {
+									await setClickedButton({
+										row: await event.target.parentNode.getAttribute(
 											"row"
 										),
-										await event.target.parentNode.getAttribute(
+										column: await event.target.parentNode.getAttribute(
 											"column"
 										),
-									]);
+									});
 								}}
 							>
 								{oneCell ? oneCell : ""}

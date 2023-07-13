@@ -8,7 +8,7 @@ export const GameContext = createContext();
 export function GameContextProvider({ children }) {
 	const [thisGame, setThisGame] = useState(game.actualGame);
 	const [initialGame, setInitialGame] = useState(game.initialGame);
-	const [clickedButton, setClickedButton] = useState([0, 0]);
+	const [clickedButton, setClickedButton] = useState({row: 0, column: 0});
 	const [pauseMove, setPauseMove] = useState(false);
 	const [isNote, setIsNote] = useState(false);
 

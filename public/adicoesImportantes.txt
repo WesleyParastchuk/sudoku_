@@ -1,22 +1,11 @@
-Transformar em type
-terminar
-Criar API para o projeto
-Salvar tempos em um banco de dados
-Usar setas para mover
-Definir botões para onFocus(mouse) e não onClick
-
-
-ONDE ESTAVA: addKeysEvents..
-
 usePrevious
 useScript
-useEventListener
-useKeyPress
 useObjectState
 useList
-useLocalStorage
-useEffect
-useContext
 
 criar proprios hooks
 utilização correta do git hub e multi niveis
+
+//recoil
+//query
+//setInitGame e roda de games

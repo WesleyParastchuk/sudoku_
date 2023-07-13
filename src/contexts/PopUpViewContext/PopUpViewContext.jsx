@@ -1,7 +1,5 @@
 import React, { createContext, useState } from "react";
 
-import { game } from "../../App";
-
 export const PopUpViewContext = createContext();
 
 export function PopUpViewContextProvider({ children }) {

@@ -4,13 +4,7 @@ import {
 	fullGameFirstTime,
 	initialGameFirstTime,
 } from "../variables";
-import {
-	calcBlockColumn,
-	calcBlockRow,
-	getBlock,
-	getColumn,
-	getRow,
-} from "../manipulableFuntions";
+import { cleanNotes, isNoteCell, isValid } from "../manipulableFuntions";
 
 class Sudoku {
 	constructor() {
@@ -34,12 +28,33 @@ class Sudoku {
 	}
 
 	async initNewGame() {
-		const board = await this.getLoadedGame(this.difficult);
-		this.initialGame = await board[0];
-		this.actualGame = await board[0];
-		this.FullGame = await board[1];
+		const loadedGame = await this.getLoadedGame(this.difficult);
+		this.initialGame = await loadedGame.initial;
+		this.actualGame = await loadedGame.initial;
+		this.FullGame = await loadedGame.full;
 		this.addPreLoadGame(this.difficult);
-		return await board[0];
+		return await loadedGame.initial;
+	}
+
+	async setNewCell(valueToSet, cell) {
+		if (await this.isInitialNumber(cell.row, cell.column)) return;
+		if (isNoteCell(valueToSet)) {
+			valueToSet = valueToSet.map(thisOne =>
+				thisOne ? Number(thisOne) : ""
+			);
+		} else {
+			valueToSet = Number(valueToSet);
+		}
+		const actual = await this.actualGame;
+		if (await isValid(await actual, cell.row, cell.column, valueToSet)) {
+			actual[cell.row][cell.column] = valueToSet;
+			this.actualGame = await cleanNotes(
+				await actual,
+				cell.row,
+				cell.column,
+				valueToSet
+			);
+		}
 	}
 
 	async preLoadGames() {
@@ -49,25 +64,25 @@ class Sudoku {
 	}
 
 	async addPreLoadGame(difficult) {
-		const thisLoad = [];
-		thisLoad.push(difficult);
-		thisLoad.push(await getBoard(difficult));
-		thisLoad.push(await getSolution(await thisLoad[1]));
+		const thisLoad = {};
+		thisLoad.difficult = difficult;
+		thisLoad.initial = await getBoard(difficult);
+		thisLoad.full = await getSolution(await thisLoad.initial);
 		this.setLoadedGame(thisLoad);
 	}
 
-	setLoadedGame(thisLoad) {
+	async setLoadedGame(thisLoad) {
 		localStorage.setItem(
-			`pre-loaded-games-${thisLoad[0]}`,
-			JSON.stringify([thisLoad[1].board, thisLoad[2]])
+			`pre-loaded-games-${thisLoad.difficult}`,
+			JSON.stringify([thisLoad.initial.board, thisLoad.full])
 		);
 	}
 
-	getLoadedGame(difficult) {
-		console.log(difficult);
-		return JSON.parse(
+	async getLoadedGame(difficult) {
+		const thisLoad =  await JSON.parse(
 			localStorage.getItem(`pre-loaded-games-${difficult}`)
 		);
+		return { initial: thisLoad[0], full: thisLoad[1] };
 	}
 
 	set FullGame(fullGame) {
@@ -102,72 +117,8 @@ class Sudoku {
 		return JSON.parse(localStorage.getItem("difficult"));
 	}
 
-	async isValid(matriz, row, column, value) {
-		if (value == 0 || value == "") return true;
-		if (
-			(await getRow(matriz, row)).includes(value) ||
-			(await getColumn(matriz, column).includes(value)) ||
-			(await getBlock(
-				matriz,
-				calcBlockRow(row),
-				calcBlockColumn(column)
-			).includes(value))
-		) {
-			return false;
-		} else {
-			return true;
-		}
-	}
-
-	async cleanNote(actual, row, column, value) {
-		if (value == 0 || value == "") return actual;
-		(await getRow(actual, row)).map((element, index) => {
-			if (typeof element == "object" && index != column) {
-				if (element.includes(value)) {
-					actual[row][index][value - 1] = 0;
-				}
-			}
-		});
-		(await getColumn(actual, column)).map((element, index) => {
-			if (typeof element == "object" && index != row) {
-				if (element.includes(value)) {
-					actual[index][column][value - 1] = 0;
-				}
-			}
-		});
-		(
-			await getBlock(actual, calcBlockRow(row), calcBlockColumn(column))
-		).map((element, index) => {
-			const thisRow = calcBlockRow(row) * 3 + Math.floor(index / 3);
-			const thisColumn = calcBlockColumn(column) * 3 + (index % 3);
-			if (typeof element == "object" && (index != (thisRow*3 + thisColumn))) {
-				if (element.includes(value)) {
-					actual[thisRow][thisColumn][value - 1] = 0;
-				}
-			}
-		});
-		return actual;
-	}
-
-	async setNewCell(value, cellClicked) {
-		if (typeof value == "object")
-			value = value.map(thisOne => (thisOne ? Number(thisOne) : ""));
-		else value = Number(value);
-		const initial = await this.initialGame;
-		const [row, column] = cellClicked;
-		if (initial[row][column]) {
-			return;
-		}
-		const actual = await this.actualGame;
-		if (await this.isValid(await actual, row, column, value)) {
-			actual[row][column] = value;
-			this.actualGame = await this.cleanNote(
-				await actual,
-				row,
-				column,
-				value
-			);
-		}
+	async isInitialNumber(row, column) {
+		return await this.initialGame[row][column];
 	}
 }
 

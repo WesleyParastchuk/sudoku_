@@ -10,7 +10,6 @@ export function DifficultSelectionContextProvider({ children }) {
 	function setNewDifficult(difficult) {
 		game.difficult = difficult;
 		setThisDifficult(difficult);
-		console.log(difficult)
 	}
 
 	return (

@@ -32,6 +32,3 @@ export async function getSolution(board) {
 			return response.solution;
 		});
 }
-//recoil
-//query
-//setInitGame e roda de games

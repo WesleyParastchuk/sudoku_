@@ -1,11 +1,16 @@
 import React, { useContext, useEffect } from "react";
 import { NumberSelectionButton } from "./NumberSelectionButton";
+import { GameContext } from "../../../contexts/GameContext/GameContext";
 
 import "./NumberSelection.css";
 
 import { game } from "../../../App";
-import { GameContext } from "../../../contexts/GameContext/GameContext";
-import { listThisUpTo } from "../../../script/manipulableFuntions";
+
+import {
+	listThisUpTo,
+	noteIsEmpty,
+	isNoteCell,
+} from "../../../script/manipulableFuntions";
 import { totalBlocks, emptyNote } from "../../../script/variables";
 
 export function NumberSelection() {
@@ -14,60 +19,56 @@ export function NumberSelection() {
 	const numbers = listThisUpTo(1, totalBlocks);
 
 	function setMoveClick(row, column) {
-		const [thisRow, thisColumn] = clickedButton;
-		const button = [Number(thisRow) + row, Number(thisColumn) + column];
+		const button = {
+			row: Number(clickedButton.row) + row,
+			column: Number(clickedButton.column) + column,
+		};
 		if (
-			button[0] >= 0 &&
-			button[0] <= 8 &&
-			button[1] >= 0 &&
-			button[1] <= 8
+			button.row >= 0 &&
+			button.row <= totalBlocks - 1 &&
+			button.column >= 0 &&
+			button.column <= totalBlocks - 1
 		) {
-			setClickedButton(button);
+			setClickedButton({ row: button.row, column: button.column });
 		}
 	}
 
-	function noteIsEmpty(note) {
-		let isEmpty = true;
-		note.forEach(space => {
-			if (space) isEmpty = false;
-		});
-		return isEmpty;
-	}
-
-	async function verifyAndSetNumberOrNote(number){
-		number = Number(number)
+	async function setThisNote(value) {
 		let newValue = [];
-			if (isNote) {
-				const actualValue = await game.actualGame[clickedButton[0]][
-					clickedButton[1]
-				];
-				if (typeof actualValue == "object") {
-					newValue.push(...actualValue);
-					if (actualValue.includes(number)) {
-						newValue[number - 1] = "";
-						console.log(newValue)
-						if (noteIsEmpty(newValue)) {
-							newValue = "";
-						}
-					} else {
-						newValue[number - 1] = number;
-					}
-				} else {
-					newValue.push(...emptyNote);
-					newValue[number - 1] = number;
+		const actualValue = await game.actualGame[clickedButton.row][
+			clickedButton.column
+		];
+		if (isNoteCell(actualValue)) {
+			newValue.push(...actualValue);
+			if (actualValue.includes(value)) {
+				newValue[value - 1] = "";
+				if (noteIsEmpty(newValue)) {
+					newValue = "";
 				}
 			} else {
-				newValue = number;
+				newValue[value - 1] = value;
 			}
-			await game
-				.setNewCell(newValue, clickedButton)
-				.then(() => actGame());
+		} else {
+			newValue.push(...emptyNote);
+			newValue[value - 1] = value;
+		}
+	}
+
+	async function verifyAndSetNewValue(value) {
+		value = Number(value);
+		let newValue = [];
+		if (isNote) {
+			newValue = setThisNote(value);
+		} else {
+			newValue = value;
+		}
+		await game.setNewCell(newValue, clickedButton).then(() => actGame());
 	}
 
 	async function handleClickEvent(event) {
 		if (pauseMove) return;
 		if (numbers.includes(Number(event.key))) {
-			await verifyAndSetNumberOrNote(event.key);
+			await verifyAndSetNewValue(event.key);
 		} else if (event.key == "ArrowUp") {
 			setMoveClick(-1, 0);
 		} else if (event.key == "ArrowDown") {
@@ -90,7 +91,13 @@ export function NumberSelection() {
 	return (
 		<div className="number-selection-container">
 			{numbers.map(number => {
-				return <NumberSelectionButton key={number} number={number} onClick={verifyAndSetNumberOrNote}/>;
+				return (
+					<NumberSelectionButton
+						key={number}
+						number={number}
+						onClick={verifyAndSetNewValue}
+					/>
+				);
 			})}
 		</div>
 	);
